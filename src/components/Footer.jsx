@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
-    const mapsLink = "https://www.google.com/maps/dir//Restaurante+La+Tavernetta,+Av.+del+Mar,+04711+Almerimar,+Almer%C3%ADa/@36.7161633,-2.8277973,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0xd705d00f2fe8ce1:0x34240ff9435e122a!2m2!1d-2.8147239!2d36.7071158?entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D";
+    const mapsLink = "https://www.google.com/maps/place/Restaurante+La+Tavernetta/@36.7071158,-2.8147239,17z/data=!3m1!4b1!4m6!3m5!1s0xd705d00f2fe8ce1:0x34240ff9435e122a!8m2!3d36.7071158!4d-2.8147239!16s%2Fg%2F11b6dq9rs0?entry=ttu&g_ep=EgoyMDI2MDEyMS4wIKXMDSoASAFQAw%3D%3D";
     const navigate = useNavigate();
     const [clickCount, setClickCount] = useState(0);
 
