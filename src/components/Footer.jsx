@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
-    const mapsLink = "https://www.google.com/maps/place/Restaurante+La+Tavernetta/@36.7071158,-2.8147239,17z/data=!3m1!4b1!4m6!3m5!1s0xd705d00f2fe8ce1:0x34240ff9435e122a!8m2!3d36.7071158!4d-2.8147239";
+    const mapsLink = "https://www.google.com/maps/search/?api=1&query=Restaurante+La+Tavernetta+Almerimar";
     const navigate = useNavigate();
     const [clickCount, setClickCount] = useState(0);
 
