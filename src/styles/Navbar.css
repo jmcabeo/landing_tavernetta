@@ -29,31 +29,24 @@
     /* Necesario para posicionamiento absoluto en móvil */
 }
 
-display: flex;
-align-items: center;
-justify-content: center;
-/* Centrar logo en su caja */
-height: 120px;
-/* Tamaño default PC más contenido */
-width: auto;
-flex-shrink: 0;
-transition: all 0.3s ease;
+.navbar-logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: auto;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
 
-/* Fondo "ligero blanco" solicitado */
-background-color: rgba(255, 255, 255, 0.3);
-/* Blanco semitransparente sutil */
-backdrop-filter: blur(5px);
-/* Efecto cristal para elegancia */
-padding: 10px;
-/* Espacio para que el fondo respire alrededor del logo */
-border-radius: 12px;
-/* Bordes suaves */
-margin-right: 20px;
-/* Separación visual */
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(2px);
+    padding: 8px;
+    border-radius: 12px;
+    margin-right: 20px;
 }
 
 .navbar.scrolled .navbar-logo-container {
-    height: 80px;
+    height: 70px;
 }
 
 .navbar-logo-img {
