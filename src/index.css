@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+    /* Paleta Corporativa "La Tavernetta" (Ajustada) */
+
+    /* Marrón Chocolate / Café Profundo */
+    --color-text: #3E2F26;
+    /* Un marrón más profundo y neutro */
+    --color-text-light: #6D5A4B;
+
+    /* Crema / Beige Cálido */
+    --color-bg: #F9F7F2;
+    /* Más claro, casi blanco pero cálido */
+    --color-surface: #FFFFFF;
+    --color-surface-alt: #F0EBE0;
+
+    /* Botones/Acentos: CAMBIO DE ROJO A OCRE/MARRÓN CÁLIDO/TERRACOTA SUAVE */
+    /* El usuario dijo que los rojos desentonan. Usaremos un tono Teja/Cobre más elegante o el Marrón del logo */
+    --color-primary: #8C6A5D;
+    /* Un tono Terracota/Marrón suave y elegante "Taupe/Cobre" */
+    --color-primary-dark: #5C4135;
+    /* Marrón oscuro para hover */
+
+    /* Dorado / Ocre (Para detalles finos) */
+    --color-accent: #C5A065;
+
+    /* Tipografías */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+
+    /* Sombras y Bordes */
+    --shadow-sm: 0 1px 2px rgba(62, 47, 38, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(62, 47, 38, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(62, 47, 38, 0.1);
+
+    --radius-md: 8px;
+    --radius-lg: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    margin-top: 0;
+    line-height: 1.2;
+    color: var(--color-text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+button {
+    font-family: var(--font-sans);
+    cursor: pointer;
+}
+
+/* Utilities */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-padding {
+    padding: 80px 0;
+}

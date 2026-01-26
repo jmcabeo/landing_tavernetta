@@ -1,0 +1,147 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 0;
+    /* Un poco más de aire */
+    transition: all 0.3s ease;
+    /* Color por defecto (marrón) */
+    color: var(--color-text);
+}
+
+/* --- ESTADO FLOTANTE (ARRIBA) --- */
+.navbar:not(.scrolled) {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
+    /* Gradiente sutil para legibilidad */
+    color: white;
+    /* Enlaces blancos sobre la foto */
+}
+
+/* --- ESTADO SCROLL (SÓLIDO) --- */
+.navbar.scrolled {
+    background-color: var(--color-bg);
+    /* Crema */
+    box-shadow: var(--shadow-md);
+    color: var(--color-text);
+    /* Marrón */
+    padding: 10px 0;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo-container {
+    display: flex;
+    align-items: center;
+    /* Quitamos el fondo blanco de la caja si el logo ya es un PNG bueno, 
+       pero el usuario pidió "sin fondo en png". Si el logo es blanco o negro, hay que ver.
+       Si es el logo oficial marrón, sobre fondo oscuro NO se verá.
+       
+       Estrategia:
+       - Si estamos arriba (fondo oscuro): Necesitamos una cajita clara O un filtro brightness(0) invert(1) si fuera negro puro.
+       - Si estamos en scroll (fondo claro): Se ve bien normal.
+       
+       El usuario dijo: "el logo debe ser mas grande y sin fondo en png".
+       Asumiré que es transparente. Si es texto oscuro, sobre el hero oscuro no se ve.
+       Mantendré una TRASERA sutil o aseguraré que el logo tenga trazo claro?
+       
+       Mejor: Aplicaré un filtro 'brightness(0) invert(1)' (hacerlo blanco) cuando estemos en el hero, 
+       si es que el logo es monocolor oscuro. Si es multicolor, mejor una cajita blanca suave.
+       
+       El usuario se quejó de las letras, no explícitamente del logo invisible, pero mejor asegurar.
+       Voy a usar la técnica de la cajita blanca suave siempre para garantizar contraste del logo corporativo marrón.
+    */
+    /* Aumentar tamaño logo para nuevo diseño horizontal (160px) */
+    height: 160px;
+    width: auto;
+    /* Permitir que crezca */
+    flex-shrink: 0;
+    /* IMPEDIR QUE FLEXBOX LO APRIETE */
+    transition: height 0.3s ease;
+}
+
+.navbar.scrolled .navbar-logo-container {
+    height: 100px;
+    /* Se achica un poco al scroll, pero sigue siendo grande */
+}
+
+.navbar-logo-img {
+    height: 100%;
+    width: auto;
+    /* Permitir ancho natural */
+    max-width: none;
+    /* ROMPER LÍMITE DE ANCHO SI EXISTE SOBREESCRIBIENDO */
+    object-fit: contain;
+    /* Asegurar que se renderice bien */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.navbar-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-link {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color 0.2s;
+}
+
+/* Enlaces Blancos en Hero con sombra */
+.navbar:not(.scrolled) .navbar-link {
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    font-weight: 600;
+}
+
+.navbar.scrolled .navbar-link {
+    color: var(--color-text);
+    text-shadow: none;
+}
+
+.navbar-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--color-accent);
+    /* Dorado para el underline */
+    transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+    width: 100%;
+}
+
+.navbar-cta {
+    background-color: var(--color-primary);
+    /* Taupe/Marrón */
+    color: white;
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.navbar-cta:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
