@@ -81,3 +81,27 @@
     font-size: 0.85rem;
     color: #9E8F85;
 }
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 60px 0 30px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-col p,
+    .footer-col a {
+        font-size: 1rem;
+        /* Texto más legible en móvil */
+    }
+}

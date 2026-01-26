@@ -91,22 +91,91 @@
 
 /* Responsive */
 @media (max-width: 850px) {
+    .about {
+        padding: 60px 0;
+    }
+
     .about-grid {
         grid-template-columns: 1fr;
         gap: 40px;
         text-align: center;
+        margin-bottom: 60px;
     }
 
     .about-title {
         font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    .about-text-col p {
+        font-size: 1rem;
+        text-align: left;
+        padding: 0 10px;
     }
 
     .about-signature {
         text-align: center;
+        margin-top: 20px;
     }
 
+    /* En móvil, queremos que la imagen siempre esté visible de forma lógica.
+       Normalmente: Título -> Imagen -> Texto.
+       Pero en el diseño original alternamos.
+       
+       Bloque 1 (Historia): Texto - Imagen. Mobile: Imagen - Texto? O Texto - Imagen.
+       Si dejamos normal: Texto arriba, Imagen abajo. OK.
+       
+       Bloque 2 (Comida): Imagen - Texto. Mobile: Imagen arriba, Texto abajo. OK.
+       
+       Bloque 3 (Chef): Texto - Imagen. Mobile: Texto arriba, Imagen abajo. OK.
+       
+       La clase .reverse-mobile se usaba para invertir. Si queremos Imagen siempre arriba:
+       Bloque 1: column-reverse (Img arriba).
+       Bloque 2: column (Img arriba).
+       Bloque 3: column-reverse (Img arriba).
+    */
+
     .reverse-mobile {
+        /* Si la imagen es el child 1, y está en desktop a la izquierda. */
+        /* Queremos imagen arriba. display: flex; flex-direction: column; hace eso por defecto. */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Para bloques donde el texto es primero (Bloque 1 y 3) */
+    /* Si queremos la imagen ARRIBA, necesitamos invertirlos */
+    .about-grid:not(.reverse-mobile) {
         display: flex;
         flex-direction: column-reverse;
     }
+
+    /* Ajuste para que el reverso funcione bien */
+    .about-img-col,
+    .about-text-col {
+        width: 100%;
+    }
+
+    .about-img {
+        max-height: 300px;
+    }
+
+    /* Excepción: Si queremos mantener el orden lógico de lectura (Texto -> Foto) en bloques narrativos,
+       podemos simplificar y dejar que caigan por naturalidad del HTML.
+       
+       HTML Order:
+       Block 1: Text, Img. -> Mobile: Text, then Img. (OK)
+       Block 2: Img, Text. -> Mobile: Img, then Text. (OK)
+       Block 3: Text, Img. -> Mobile: Text, then Img. (OK)
+       
+       Simplemente quitamos hacks de orden y usaremos flex column si grid 1fr da problemas,
+       pero grid 1fr respeta orden DOM.
+    */
+    .about-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* Restaurar orden específico si se desea */
+    /* En bloque 2 (reverse-mobile), el HTML es Img, Text. Se verá Img arriba. */
 }

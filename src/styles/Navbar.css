@@ -5,27 +5,19 @@
     width: 100%;
     z-index: 1000;
     padding: 20px 0;
-    /* Un poco más de aire */
     transition: all 0.3s ease;
-    /* Color por defecto (marrón) */
     color: var(--color-text);
 }
 
-/* --- ESTADO FLOTANTE (ARRIBA) --- */
 .navbar:not(.scrolled) {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 100%);
-    /* Gradiente sutil para legibilidad */
     color: white;
-    /* Enlaces blancos sobre la foto */
 }
 
-/* --- ESTADO SCROLL (SÓLIDO) --- */
 .navbar.scrolled {
     background-color: var(--color-bg);
-    /* Crema */
     box-shadow: var(--shadow-md);
     color: var(--color-text);
-    /* Marrón */
     padding: 10px 0;
 }
 
@@ -33,52 +25,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    /* Necesario para posicionamiento absoluto en móvil */
 }
 
 .navbar-logo-container {
     display: flex;
     align-items: center;
-    /* Quitamos el fondo blanco de la caja si el logo ya es un PNG bueno, 
-       pero el usuario pidió "sin fondo en png". Si el logo es blanco o negro, hay que ver.
-       Si es el logo oficial marrón, sobre fondo oscuro NO se verá.
-       
-       Estrategia:
-       - Si estamos arriba (fondo oscuro): Necesitamos una cajita clara O un filtro brightness(0) invert(1) si fuera negro puro.
-       - Si estamos en scroll (fondo claro): Se ve bien normal.
-       
-       El usuario dijo: "el logo debe ser mas grande y sin fondo en png".
-       Asumiré que es transparente. Si es texto oscuro, sobre el hero oscuro no se ve.
-       Mantendré una TRASERA sutil o aseguraré que el logo tenga trazo claro?
-       
-       Mejor: Aplicaré un filtro 'brightness(0) invert(1)' (hacerlo blanco) cuando estemos en el hero, 
-       si es que el logo es monocolor oscuro. Si es multicolor, mejor una cajita blanca suave.
-       
-       El usuario se quejó de las letras, no explícitamente del logo invisible, pero mejor asegurar.
-       Voy a usar la técnica de la cajita blanca suave siempre para garantizar contraste del logo corporativo marrón.
-    */
-    /* Aumentar tamaño logo para nuevo diseño horizontal (160px) */
-    height: 160px;
+    height: 120px;
+    /* Tamaño default PC más contenido */
     width: auto;
-    /* Permitir que crezca */
     flex-shrink: 0;
-    /* IMPEDIR QUE FLEXBOX LO APRIETE */
     transition: height 0.3s ease;
 }
 
 .navbar.scrolled .navbar-logo-container {
-    height: 100px;
-    /* Se achica un poco al scroll, pero sigue siendo grande */
+    height: 80px;
 }
 
 .navbar-logo-img {
     height: 100%;
     width: auto;
-    /* Permitir ancho natural */
-    max-width: none;
-    /* ROMPER LÍMITE DE ANCHO SI EXISTE SOBREESCRIBIENDO */
     object-fit: contain;
-    /* Asegurar que se renderice bien */
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Wrapper para links y botón - Layout Desktop Default */
+.navbar-menu-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
 .navbar-links {
@@ -96,9 +72,9 @@
     letter-spacing: 1px;
     position: relative;
     transition: color 0.2s;
+    text-decoration: none;
 }
 
-/* Enlaces Blancos en Hero con sombra */
 .navbar:not(.scrolled) .navbar-link {
     color: white;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
@@ -118,7 +94,6 @@
     bottom: -4px;
     left: 0;
     background-color: var(--color-accent);
-    /* Dorado para el underline */
     transition: width 0.3s ease;
 }
 
@@ -128,7 +103,6 @@
 
 .navbar-cta {
     background-color: var(--color-primary);
-    /* Taupe/Marrón */
     color: white;
     padding: 12px 28px;
     border-radius: 4px;
@@ -138,10 +112,88 @@
     border: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .navbar-cta:hover {
     background-color: var(--color-primary-dark);
     transform: translateY(-1px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Botón Móvil - Oculto en Desktop */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 5px;
+    z-index: 1001;
+    /* Encima del overlay */
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .navbar-logo-container {
+        height: 80px;
+        /* Más pequeño en tablet/móvil */
+    }
+
+    .navbar.scrolled .navbar-logo-container {
+        height: 60px;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        /* Mostrar botón hamburguesa */
+    }
+
+    /* Menú Móvil Overlay */
+    .navbar-menu-wrapper {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--color-bg);
+        /* Fondo sólido crema */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transform: translateX(100%);
+        /* Oculto por defecto */
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+        /* Debajo del botón, encima de todo */
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-menu-wrapper.active {
+        transform: translateX(0);
+        /* Mostrar */
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .navbar-link {
+        font-size: 1.5rem;
+        /* Letra más grande en móvil */
+        color: var(--color-text) !important;
+        /* Siempre color texto en menú móvil */
+        text-shadow: none !important;
+    }
+
+    .navbar-cta {
+        font-size: 1.2rem;
+        padding: 15px 40px;
+        width: 80%;
+        text-align: center;
+    }
 }
