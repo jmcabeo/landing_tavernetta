@@ -6,8 +6,16 @@ const Login = ({ onLogin }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Contraseña hardcodeada para demostración simple
-        if (password === 'admin123') {
+
+        // Inicializar contraseña por defecto si no existe
+        const storedPassword = localStorage.getItem('adminPassword');
+        if (!storedPassword) {
+            localStorage.setItem('adminPassword', 'admin123');
+        }
+
+        const currentPassword = localStorage.getItem('adminPassword') || 'admin123';
+
+        if (password === currentPassword) {
             onLogin(true);
         } else {
             setError('Contraseña incorrecta');
