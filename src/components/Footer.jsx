@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
     const mapsLink = "https://www.google.com/maps/place/Restaurante+La+Tavernetta/@36.7071158,-2.8147239,17z/data=!3m1!4b1!4m6!3m5!1s0xd705d00f2fe8ce1:0x34240ff9435e122a!8m2!3d36.7071158!4d-2.8147239";
+    const navigate = useNavigate();
+    const [clickCount, setClickCount] = useState(0);
+
+    const handleSecretClick = () => {
+        setClickCount(prev => {
+            const newCount = prev + 1;
+            if (newCount === 5) {
+                navigate('/admin');
+                return 0;
+            }
+            // Reset count if minimal delay passes (simple debounce logic implies user should be fast, 
+            // but for simplicity we just auto-reset via timeout or rely on component unmount; 
+            // here a timeout to reset count if stopped clicking helps avoid accidental triggers over long periods)
+            setTimeout(() => setClickCount(0), 2000);
+            return newCount;
+        });
+    };
 
     return (
         <footer id="contact" className="footer">
@@ -37,7 +55,12 @@ const Footer = () => {
                         <p className="small" style={{ color: '#E67E22' }}>Lunes Cerrado</p>
                     </div>
                 </div>
-                <div className="footer-bottom">
+                <div
+                    className="footer-bottom"
+                    onClick={handleSecretClick}
+                    style={{ cursor: 'text', userSelect: 'none' }} /* Cursor text para despistar */
+                    title="" /* No tooltip */
+                >
                     &copy; {new Date().getFullYear()} La Tavernetta. Todos los derechos reservados.
                 </div>
             </div>
