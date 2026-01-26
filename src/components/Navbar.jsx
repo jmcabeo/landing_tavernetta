@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Navbar.css';
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="container navbar-container">
                 <a href="#" className="navbar-logo-container" style={{ display: 'flex', alignItems: 'center' }}>
-                    <img src="/src/assets/logo.png" alt="La Tavernetta" style={{ height: '50px' }} />
+                    <img src={logo} alt="La Tavernetta" style={{ height: '50px' }} />
                 </a>
                 <ul className="navbar-links">
                     <li><a href="#about" className="navbar-link">Nuestra Historia</a></li>

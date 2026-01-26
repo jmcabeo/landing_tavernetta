@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import '../styles/About.css';
+import aboutFriendsReal from '../assets/about_friends_real.png';
+import aboutVarietyFlatlay from '../assets/about_variety_flatlay.png';
+import aboutChef from '../assets/about_chef.png';
 
 const About = () => {
     return (
@@ -50,7 +53,7 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <img src="/src/assets/about_friends_real.png" alt="Amigos brindando en el interior de La Tavernetta" className="about-img shadow-lg" />
+                        <img src={aboutFriendsReal} alt="Amigos brindando en el interior de La Tavernetta" className="about-img shadow-lg" />
                     </motion.div>
                 </div>
 
@@ -62,7 +65,7 @@ const About = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                     >
-                        <img src="/src/assets/about_variety_flatlay.png" alt="Mesa de La Tavernetta con Pizza, Nachos y Pescado" className="about-img shadow-lg" />
+                        <img src={aboutVarietyFlatlay} alt="Mesa de La Tavernetta con Pizza, Nachos y Pescado" className="about-img shadow-lg" />
                     </motion.div>
                     <motion.div
                         className="about-text-col"
@@ -108,7 +111,7 @@ const About = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <img src="/src/assets/about_chef.png" alt="Chef preparando platos con pasión" className="about-img shadow-lg" />
+                        <img src={aboutChef} alt="Chef preparando platos con pasión" className="about-img shadow-lg" />
                     </motion.div>
                 </div>
 
