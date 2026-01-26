@@ -1,21 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { hashPassword, verifyPassword } from '../../utils/security';
 
 const Login = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        // Migración automática de texto plano a Hash si es necesario
+        const initSecurity = async () => {
+            const legacyPass = localStorage.getItem('adminPassword');
+            const currentHash = localStorage.getItem('adminHash');
+
+            if (legacyPass && !currentHash) {
+                // Si existe contraseña vieja texto plano, la hasheamos y guardamos
+                const hash = await hashPassword(legacyPass);
+                localStorage.setItem('adminHash', hash);
+                localStorage.removeItem('adminPassword');
+            } else if (!currentHash && !legacyPass) {
+                // Si no hay nada, inicializar con default hasheado
+                const defaultHash = await hashPassword('admin123');
+                localStorage.setItem('adminHash', defaultHash);
+            }
+        };
+        initSecurity();
+    }, []);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Inicializar contraseña por defecto si no existe
-        const storedPassword = localStorage.getItem('adminPassword');
-        if (!storedPassword) {
-            localStorage.setItem('adminPassword', 'admin123');
+        const storedHash = localStorage.getItem('adminHash');
+        if (!storedHash) {
+            // Si por alguna razón falla el effect, reintentar o mostrar error
+            const defaultHash = await hashPassword('admin123');
+            localStorage.setItem('adminHash', defaultHash);
+            // Continuar verificando contra el default
         }
 
-        const currentPassword = localStorage.getItem('adminPassword') || 'admin123';
+        // Volver a leer por si acaso se acaba de setear
+        const finalHash = localStorage.getItem('adminHash');
 
-        if (password === currentPassword) {
+        const isValid = await verifyPassword(password, finalHash);
+
+        if (isValid) {
             onLogin(true);
         } else {
             setError('Contraseña incorrecta');
