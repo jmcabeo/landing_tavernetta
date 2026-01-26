@@ -38,7 +38,8 @@
     flex-shrink: 0;
     transition: all 0.3s ease;
 
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.45);
+    /* Aumentado opacity +30% */
     backdrop-filter: blur(2px);
     padding: 8px;
     border-radius: 12px;
