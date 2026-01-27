@@ -107,9 +107,7 @@ const Dashboard = ({ onLogout }) => {
                                     )}
                                 </div>
                                 <h3 style={{ fontSize: '1.2rem', margin: '0 0 5px' }}>{dish.title}</h3>
-                                <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: '12px', background: '#f0f0f0', fontSize: '0.8rem', color: '#666', marginBottom: '10px' }}>
-                                    {dish.category}
-                                </span>
+
                                 <p style={{ fontWeight: 'bold', fontSize: '1.1rem', color: 'var(--color-primary)' }}>{dish.price}</p>
 
                                 <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
