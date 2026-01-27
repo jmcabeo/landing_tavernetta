@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
-    const mapsLink = "https://maps.app.goo.gl/96gaqHVSz2V6tN4K7";
+    // Usamos una búsqueda explícita para asegurar que Google Maps encuentre el sitio correctamente
+    const mapsLink = "https://www.google.com/maps/search/?api=1&query=Restaurante+La+Tavernetta+Almerimar";
     const navigate = useNavigate();
     const [clickCount, setClickCount] = useState(0);
 
