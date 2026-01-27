@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
-    const mapsLink = "https://maps.app.goo.gl/QfvY2mGrYDJDByyv9";
+    const mapsLink = "https://maps.app.goo.gl/96gaqHVSz2V6tN4K7";
     const navigate = useNavigate();
     const [clickCount, setClickCount] = useState(0);
 
@@ -33,12 +33,32 @@ const Footer = () => {
                     </div>
                     <div className="footer-col">
                         <h3>Dónde Estamos</h3>
-                        <a href={mapsLink} target="_blank" rel="noopener noreferrer" className="footer-address-link">
+                        <a
+                            href={mapsLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="footer-address-link"
+                            style={{ position: 'relative', zIndex: 10, cursor: 'pointer' }}
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevent default to avoid potential double-clicks or router issues
+                                window.open(mapsLink, '_blank');
+                            }}
+                        >
                             📍 Avenida del Mar, Chiringuito 7<br />
                             04711 Almerimar, El Ejido
                         </a>
                         <div style={{ marginTop: '10px' }}>
-                            <a href={mapsLink} target="_blank" rel="noopener noreferrer" className="btn-map">
+                            <a
+                                href={mapsLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn-map"
+                                style={{ position: 'relative', zIndex: 10, cursor: 'pointer' }}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    window.open(mapsLink, '_blank');
+                                }}
+                            >
                                 Ver en Google Maps
                             </a>
                         </div>
