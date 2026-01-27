@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Footer.css';
 
 const Footer = () => {
-    const mapsLink = "https://maps.app.goo.gl/QfvY2mGrYDJDByyv9";
+    const mapsLink = "https://maps.app.goo.gl/96gaqHVSz2V6tN4K7";
     const navigate = useNavigate();
     const [clickCount, setClickCount] = useState(0);
 
