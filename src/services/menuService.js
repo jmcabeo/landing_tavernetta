@@ -1,3 +1,6 @@
+import { supabase } from '../lib/supabase';
+
+// Imágenes locales para platos por defecto (fallback)
 import rapeImg from '../assets/rape.png';
 import nachosImg from '../assets/nachos.png';
 import saladImg from '../assets/salad.png';
@@ -5,140 +8,102 @@ import lasagnaImg from '../assets/lasagna.png';
 import pizzaImg from '../assets/pizza.png';
 import tiramisuImg from '../assets/tiramisu.png';
 
-// Datos extraídos de la carta real proporcionada
-const initialDishes = [
-    // --- DESTACADOS / ESPECIALIDADES ---
-    {
-        id: 1,
-        title: 'Rape al estilo Tavernetta',
-        desc: 'Pescado, Apio, Molusco, Crustáceo, Soja. Una especialidad de la casa.',
-        price: '22,50 €',
-        img: rapeImg,
-        category: 'Pescados'
-    },
-    {
-        id: 2,
-        title: 'Nachos Machos',
-        desc: 'Nachos, queso cheddar, chile con carne, salsa ranchera, guacamole y jalapeños.',
-        price: '12,50 €',
-        img: nachosImg,
-        category: 'Entrantes'
-    },
-    {
-        id: 3,
-        title: 'Ensalada Manolo',
-        desc: 'Pimiento asado, pollo marinado, atún, huevos cocidos, cebolla morada, aceitunas negras, aguacate.',
-        price: '15 €',
-        img: saladImg,
-        category: 'Ensaladas'
-    },
+// Mapeo de imágenes por defecto según el título del plato
+const defaultImages = {
+    'Rape al estilo Tavernetta': rapeImg,
+    'Nachos Machos': nachosImg,
+    'Ensalada Manolo': saladImg,
+    'Presa 100% Cerdo Ibérico Bellota': lasagnaImg,
+    'Entrecot de Vaca': lasagnaImg,
+    'Lasaña Boloñesa': lasagnaImg,
+    'Pizza Alejandro': pizzaImg,
+    'Pizza 4 Quesos': pizzaImg,
+    'Tarta de Queso al horno': tiramisuImg,
+    'Brownie de Chocolate': tiramisuImg,
+    'Tiramisù Classico': tiramisuImg
+};
 
-    // --- CARNES ---
-    {
-        id: 4,
-        title: 'Presa 100% Cerdo Ibérico Bellota',
-        desc: 'Carne de primera calidad a la plancha.',
-        price: '22,50 €',
-        img: lasagnaImg, // Placeholder por ahora
-        category: 'Carnes'
-    },
-    {
-        id: 5,
-        title: 'Entrecot de Vaca',
-        desc: 'Sabroso corte de vaca seleccionado.',
-        price: '26,50 €',
-        img: lasagnaImg, // Placeholder
-        category: 'Carnes'
-    },
-
-    // --- PASTAS Y PIZZAS ---
-    {
-        id: 6,
-        title: 'Lasaña Boloñesa',
-        desc: 'Gluten, Lácteos, Huevo. Nuestra receta clásica.',
-        price: '16,50 €', // Actualizado precio según carta (implícito en rango similar) o mantenido si no visible
-        img: lasagnaImg,
-        category: 'Pasta'
-    },
-    {
-        id: 7,
-        title: 'Pizza Alejandro',
-        desc: 'Tomate, Mozzarella, Carne picada, Bacon, Salsa barbacoa.',
-        price: '10 €', // Precio estimado base pizzas
-        img: pizzaImg,
-        category: 'Pizza'
-    },
-    {
-        id: 8,
-        title: 'Pizza 4 Quesos',
-        desc: 'Tomate, Mozzarella, Gorgonzola, Parmesano, Cheddar.',
-        price: '9,50 €',
-        img: pizzaImg,
-        category: 'Pizza'
-    },
-
-    // --- POSTRES ---
-    {
-        id: 9,
-        title: 'Tarta de Queso al horno',
-        desc: 'Casera y cremosa.',
-        price: '5,50 €',
-        img: tiramisuImg, // Placeholder
-        category: 'Postres'
-    },
-    {
-        id: 10,
-        title: 'Brownie de Chocolate',
-        desc: 'Templado con Helado.',
-        price: '5,50 €',
-        img: tiramisuImg, // Placeholder
-        category: 'Postres'
-    },
-    {
-        id: 11,
-        title: 'Tiramisù Classico',
-        desc: 'Un clásico italiano imperdible.',
-        price: '7 €', // Mantenido o ajustado
-        img: tiramisuImg,
-        category: 'Postres'
+// Función auxiliar para asignar imagen por defecto si no hay imagen
+const assignDefaultImage = (dish) => {
+    if (!dish.img) {
+        dish.img = defaultImages[dish.title] || pizzaImg;
     }
-];
-
-const STORAGE_KEY = 'tavernetta_menu_data_v4'; // Actualizado v4 para forzar recarga de imágenes
+    // Mapear 'description' de DB a 'desc' para compatibilidad con el frontend
+    if (dish.description && !dish.desc) {
+        dish.desc = dish.description;
+    }
+    return dish;
+};
 
 export const menuService = {
-    getAll: () => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (!stored) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(initialDishes));
-            return initialDishes;
+    // Obtener todos los platos
+    getAll: async () => {
+        const { data, error } = await supabase
+            .from('dishes')
+            .select('*')
+            .order('id', { ascending: true });
+
+        if (error) {
+            console.error('Error fetching dishes:', error);
+            return [];
         }
-        return JSON.parse(stored);
+
+        return data.map(assignDefaultImage);
     },
 
-    add: (dish) => {
-        const dishes = menuService.getAll();
-        const newDish = { ...dish, id: Date.now() };
-        const updated = [...dishes, newDish];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-        return newDish;
+    // Añadir un nuevo plato
+    add: async (dish) => {
+        const { data, error } = await supabase
+            .from('dishes')
+            .insert([{
+                title: dish.title,
+                description: dish.desc,
+                price: dish.price,
+                img: dish.img || null
+            }])
+            .select()
+            .single();
+
+        if (error) {
+            console.error('Error adding dish:', error);
+            throw error;
+        }
+
+        return assignDefaultImage(data);
     },
 
-    update: (id, updatedDish) => {
-        const dishes = menuService.getAll();
-        const updated = dishes.map(d => d.id === id ? { ...d, ...updatedDish } : d);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-        return updatedDish;
+    // Actualizar un plato existente
+    update: async (id, updatedDish) => {
+        const { data, error } = await supabase
+            .from('dishes')
+            .update({
+                title: updatedDish.title,
+                description: updatedDish.desc,
+                price: updatedDish.price,
+                img: updatedDish.img || null
+            })
+            .eq('id', id)
+            .select()
+            .single();
+
+        if (error) {
+            console.error('Error updating dish:', error);
+            throw error;
+        }
+
+        return assignDefaultImage(data);
     },
 
-    delete: (id) => {
-        const dishes = menuService.getAll();
-        const updated = dishes.filter(d => d.id !== id);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    },
+    // Eliminar un plato
+    delete: async (id) => {
+        const { error } = await supabase
+            .from('dishes')
+            .delete()
+            .eq('id', id);
 
-    reset: () => {
-        localStorage.removeItem(STORAGE_KEY);
-        return menuService.getAll();
+        if (error) {
+            console.error('Error deleting dish:', error);
+            throw error;
+        }
     }
 };

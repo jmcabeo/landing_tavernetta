@@ -15,14 +15,23 @@ const Dashboard = ({ onLogout }) => {
         loadDishes();
     }, []);
 
-    const loadDishes = () => {
-        setDishes(menuService.getAll());
+    const loadDishes = async () => {
+        try {
+            const data = await menuService.getAll();
+            setDishes(data);
+        } catch (error) {
+            console.error('Error loading dishes:', error);
+        }
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
         if (window.confirm('¿Estás seguro de que quieres eliminar este plato?')) {
-            menuService.delete(id);
-            loadDishes();
+            try {
+                await menuService.delete(id);
+                await loadDishes();
+            } catch (error) {
+                alert('Error al eliminar el plato');
+            }
         }
     };
 
@@ -36,14 +45,18 @@ const Dashboard = ({ onLogout }) => {
         setIsEditing(true);
     };
 
-    const handleSave = (dishData) => {
-        if (currentDish) {
-            menuService.update(currentDish.id, dishData);
-        } else {
-            menuService.add(dishData);
+    const handleSave = async (dishData) => {
+        try {
+            if (currentDish) {
+                await menuService.update(currentDish.id, dishData);
+            } else {
+                await menuService.add(dishData);
+            }
+            setIsEditing(false);
+            await loadDishes();
+        } catch (error) {
+            alert('Error al guardar el plato');
         }
-        setIsEditing(false);
-        loadDishes();
     };
 
     const handleChangePassword = async (e) => {

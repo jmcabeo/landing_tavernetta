@@ -5,17 +5,22 @@ import '../styles/MenuHighlights.css';
 
 const MenuHighlights = () => {
     const [dishes, setDishes] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Cargar platos del servicio dinámicamente
-        setDishes(menuService.getAll());
-
-        // Escuchar cambios en localStorage (opcional, para refresco simple)
-        const handleStorageChange = () => {
-            setDishes(menuService.getAll());
+        // Cargar platos del servicio (ahora async desde Supabase)
+        const loadDishes = async () => {
+            try {
+                const data = await menuService.getAll();
+                setDishes(data);
+            } catch (error) {
+                console.error('Error loading dishes:', error);
+            } finally {
+                setLoading(false);
+            }
         };
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
+
+        loadDishes();
     }, []);
 
     return (
