@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { compressImage } from '../../utils/imageHelpers';
 
-const DishForm = ({ dish, onSave, onCancel }) => {
+const DishForm = ({ initialData, onSave, onCancel }) => {
     const [formData, setFormData] = useState({
         title: '',
         desc: '',
@@ -10,10 +10,10 @@ const DishForm = ({ dish, onSave, onCancel }) => {
     });
 
     useEffect(() => {
-        if (dish) {
-            setFormData(dish);
+        if (initialData) {
+            setFormData(initialData);
         }
-    }, [dish]);
+    }, [initialData]);
 
     const [isCompressing, setIsCompressing] = useState(false);
 
