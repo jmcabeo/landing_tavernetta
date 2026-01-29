@@ -70,7 +70,7 @@ const DishForm = ({ initialData, onSave, onCancel }) => {
                 overflowY: 'auto'
             }}>
                 <h2 style={{ fontFamily: 'var(--font-serif)', marginTop: 0 }}>
-                    {dish ? 'Editar Plato' : 'Nuevo Plato'}
+                    {initialData ? 'Editar Plato' : 'Nuevo Plato'}
                 </h2>
 
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
