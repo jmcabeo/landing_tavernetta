@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Coffee, UtensilsCrossed, Truck, ShoppingCart } from 'lucide-react';
 import '../styles/Hero.css';
 
 const Hero = () => {
@@ -34,6 +35,30 @@ const Hero = () => {
                     transition={{ duration: 0.8, delay: 0.8 }}
                 >
                     <a href="https://reservas.latavernetta.es" target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'inline-block', textDecoration: 'none' }}>Reservar Mesa</a>
+                </motion.div>
+
+                <motion.div
+                    className="hero-menu-buttons"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 1.0 }}
+                >
+                    <a href="/desayunos.jpg" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                        <Coffee size={18} />
+                        <span>Desayunos</span>
+                    </a>
+                    <a href="/carta.jpg" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                        <UtensilsCrossed size={18} />
+                        <span>Carta</span>
+                    </a>
+                    <a href="/delivery.jpg" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                        <Truck size={18} />
+                        <span>A Domicilio</span>
+                    </a>
+                    <a href="https://latavernetta.last.shop/es/la-tavernetta" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-online">
+                        <ShoppingCart size={18} />
+                        <span>Pedidos Online</span>
+                    </a>
                 </motion.div>
             </div>
         </section>

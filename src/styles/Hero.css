@@ -156,3 +156,68 @@
 .btn-primary:hover {
     background-color: var(--color-primary-dark);
 }
+
+/* Secondary buttons for menu links */
+.hero-menu-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    text-decoration: none;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.btn-secondary.btn-online {
+    background-color: rgba(197, 157, 95, 0.3);
+    border-color: #C59D5F;
+}
+
+.btn-secondary.btn-online:hover {
+    background-color: rgba(197, 157, 95, 0.5);
+}
+
+@media (max-width: 768px) {
+    .hero-menu-buttons {
+        gap: 8px;
+    }
+
+    .btn-secondary {
+        padding: 8px 14px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-menu-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-secondary {
+        width: 80%;
+        justify-content: center;
+    }
+}
