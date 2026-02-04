@@ -78,6 +78,11 @@
         padding: 12px 24px;
         font-size: 0.9rem;
     }
+
+    .hero-actions .btn-primary {
+        width: auto;
+        min-width: 200px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -206,23 +211,36 @@
 
 @media (max-width: 768px) {
     .hero-menu-buttons {
-        gap: 8px;
+        gap: 10px;
     }
 
     .btn-secondary {
-        padding: 8px 14px;
-        font-size: 0.75rem;
+        padding: 12px 20px;
+        font-size: 0.8rem;
+        white-space: nowrap;
     }
 }
 
 @media (max-width: 480px) {
+    .hero-actions .btn-primary {
+        width: 200px;
+        padding: 14px 20px;
+    }
+
     .hero-menu-buttons {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
+        justify-content: center;
+        gap: 10px;
     }
 
     .btn-secondary {
-        width: 80%;
+        width: auto;
+        min-width: 140px;
+        padding: 12px 16px;
+        font-size: 0.7rem;
         justify-content: center;
+        white-space: nowrap;
     }
 }
