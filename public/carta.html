@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta - La Tavernetta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #C59D5F;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #C59D5F;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .back-link:hover {
+            background: #d4ac6e;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/" class="back-link">← Volver</a>
+    <h1>Nuestra Carta</h1>
+    <div class="gallery">
+        <img src="/carta.jpg" alt="Carta - Carnes, Pescados, Entrantes" />
+        <img src="/carta2.jpg" alt="Carta - Pasta y Pizza" />
+    </div>
+</body>
+
+</html>

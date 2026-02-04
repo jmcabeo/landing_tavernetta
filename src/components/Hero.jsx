@@ -47,7 +47,7 @@ const Hero = () => {
                         <Coffee size={18} />
                         <span>Desayunos</span>
                     </a>
-                    <a href="/carta.jpg" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                    <a href="/carta.html" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
                         <UtensilsCrossed size={18} />
                         <span>Carta</span>
                     </a>
