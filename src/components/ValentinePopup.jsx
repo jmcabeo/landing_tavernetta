@@ -35,6 +35,17 @@ const ValentinePopup = () => {
         sessionStorage.setItem('valentinePopupClosed', 'true');
     };
 
+    const handleViewMenu = () => {
+        handleClose();
+        // Esperar un poco para que se cierre el popup y luego hacer scroll
+        setTimeout(() => {
+            const menuSection = document.getElementById('valentine-promo');
+            if (menuSection) {
+                menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 300);
+    };
+
     if (!isActive) return null;
 
     return (
@@ -62,7 +73,7 @@ const ValentinePopup = () => {
 
                         <div className="valentine-popup-footer">
                             <h3>¡Celebra el Amor con Nosotros!</h3>
-                            <button className="valentine-popup-cta" onClick={handleClose}>
+                            <button className="valentine-popup-cta" onClick={handleViewMenu}>
                                 Ver Menú
                             </button>
                         </div>

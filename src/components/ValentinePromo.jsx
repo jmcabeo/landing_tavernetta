@@ -44,7 +44,7 @@ const ValentinePromo = () => {
 
     return (
         <>
-            <section className="valentine-promo">
+            <section id="valentine-promo" className="valentine-promo">
                 <div className="valentine-container">
                     {/* Decoración de corazones */}
                     <div className="hearts-decoration">
