@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { menuService } from '../../services/menuService';
+import { settingsService } from '../../services/settingsService';
 import DishForm from './DishForm';
 import { hashPassword } from '../../utils/security';
 
@@ -11,9 +12,37 @@ const Dashboard = ({ onLogout }) => {
     const [isChangingPassword, setIsChangingPassword] = useState(false);
     const [newPassword, setNewPassword] = useState('');
 
+    // Estado para promoción San Valentín
+    const [valentinePromoActive, setValentinePromoActive] = useState(false);
+    const [loadingPromo, setLoadingPromo] = useState(true);
+
     useEffect(() => {
         loadDishes();
+        loadValentinePromo();
     }, []);
+
+    const loadValentinePromo = async () => {
+        try {
+            const active = await settingsService.getValentinePromo();
+            setValentinePromoActive(active);
+        } catch (error) {
+            console.error('Error loading valentine promo status:', error);
+        } finally {
+            setLoadingPromo(false);
+        }
+    };
+
+    const handleToggleValentinePromo = async () => {
+        const newState = !valentinePromoActive;
+        setValentinePromoActive(newState);
+        try {
+            await settingsService.setValentinePromo(newState);
+        } catch (error) {
+            console.error('Error updating valentine promo:', error);
+            setValentinePromoActive(!newState); // Revert on error
+            alert('Error al actualizar la promoción');
+        }
+    };
 
     const loadDishes = async () => {
         try {
@@ -105,6 +134,43 @@ const Dashboard = ({ onLogout }) => {
                 />
             ) : (
                 <>
+                    {/* Sección Promociones */}
+                    <div style={{
+                        background: 'linear-gradient(135deg, #fff0f3 0%, #fff 100%)',
+                        padding: '20px',
+                        borderRadius: '12px',
+                        marginBottom: '30px',
+                        border: '1px solid #ffccd5',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        boxShadow: '0 4px 12px rgba(255, 77, 109, 0.1)'
+                    }}>
+                        <div>
+                            <h3 style={{ margin: '0 0 5px', color: '#d63384' }}>🌹 Promoción San Valentín</h3>
+                            <p style={{ margin: 0, color: '#666', fontSize: '0.9rem' }}>
+                                Activa o desactiva el banner especial de San Valentín en la página principal.
+                            </p>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span style={{ fontWeight: 'bold', color: valentinePromoActive ? '#2ecc71' : '#95a5a6' }}>
+                                {valentinePromoActive ? 'ACTIVADA' : 'DESACTIVADA'}
+                            </span>
+                            <button
+                                onClick={handleToggleValentinePromo}
+                                disabled={loadingPromo}
+                                className="btn"
+                                style={{
+                                    backgroundColor: valentinePromoActive ? '#e74c3c' : '#2ecc71',
+                                    color: 'white',
+                                    minWidth: '120px'
+                                }}
+                            >
+                                {loadingPromo ? '...' : (valentinePromoActive ? 'Desactivar' : 'Activar')}
+                            </button>
+                        </div>
+                    </div>
+
                     <button onClick={handleAddNew} className="btn btn-primary" style={{ marginBottom: '2rem' }}>
                         + Añadir Nuevo Plato
                     </button>

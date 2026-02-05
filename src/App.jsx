@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import ValentinePromo from './components/ValentinePromo';
+import FloatingHeart from './components/FloatingHeart';
+import ValentinePopup from './components/ValentinePopup';
+import CookieConsent from './components/CookieConsent';
 import About from './components/About';
 import MenuHighlights from './components/MenuHighlights';
 import Footer from './components/Footer';
@@ -14,9 +18,13 @@ const PublicHome = () => (
     <>
         <Navbar />
         <Hero />
+        <ValentinePromo />
+        <FloatingHeart />
+        <ValentinePopup />
         <About />
         <MenuHighlights />
         <Footer />
+        <CookieConsent />
     </>
 );
 
